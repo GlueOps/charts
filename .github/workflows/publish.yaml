@@ -26,3 +26,5 @@ jobs:
 
       - name: Package and Publish
         run: bash ./deploy.sh
+        env:
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
