@@ -6,7 +6,7 @@ export AWS_REGION=us-west-2
 for group in `ls -d */`
 do
     cd $group
-    helm s3 init s3://${{ secrets.S3_BUCKET_NAME }}/$group && helm repo add $group s3://${{ secrets.S3_BUCKET_NAME }}/$group
+    helm s3 init s3://$S3_BUCKET_NAME/$group && helm repo add $group s3://$S3_BUCKET_NAME/$group
 
     for D in `ls -d */`
     do
