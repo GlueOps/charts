@@ -23,7 +23,6 @@ jobs:
         with:
           helm-version: "v3.10.1"
 
-
       - name: Package and Publish
         run: bash ./deploy.sh
         env:

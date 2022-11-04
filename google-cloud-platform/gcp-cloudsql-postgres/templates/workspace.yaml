@@ -1,1 +1,33 @@
-klasjklaskljasjklasljk
+apiVersion: app.terraform.io/v1alpha1
+kind: Workspace
+metadata:
+  name: "{{ .Values.DB_CLUSTER_NAME }}"
+spec:
+  organization: "{{ .Values.TFC_ORG_NAME }}"
+  secretsMountPath: "/tmp/secrets"
+  module:
+    source: "git::https://github.com/GlueOps/terraform-gcp-cloud-sql.git"
+  variables:
+    - key: GOOGLE_CREDENTIALS
+      sensitive: true
+      environmentVariable: true
+    - key: GLUEOPS_ENV
+      sensitive: false
+      value: "{{ .Values.GLUEOPS_ENV }}"
+      environmentVariable: false
+    - key: TOGGLE_TO_RERUN
+      sensitive: false
+      value: "{{ .Values.TOGGLE_TO_RERUN }}"
+      environmentVariable: true
+    - key: PROJECT_NAME
+      sensitive: false
+      value: "{{ .Values.PROJECT_NAME }}"
+      environmentVariable: false
+    - key: DB_CLUSTER_NAME
+      sensitive: false
+      value: "{{ .Values.DB_CLUSTER_NAME }}"
+      environmentVariable: false
+    - key: REGION
+      sensitive: false
+      value: "{{ .Values.REGION }}"
+      environmentVariable: false
