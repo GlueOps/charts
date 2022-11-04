@@ -1,0 +1,17 @@
+# Default values for hello-world.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+tacoWebpage:
+  replicaCount: 1
+
+  applicationConfig:
+    appName: hello-world
+    image: antoniostacos/taco-webpage:v0.5.2
+    containerPort: 8080
+    ingress:
+      host: hello-world.gcp.glueops.rocks
+    env:
+      "ASPNETCORE_ENVIRONMENT": "Staging"
+      "ASPNETCORE_FORWARDEDHEADERS_ENABLED": "true"
+

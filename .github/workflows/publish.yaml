@@ -1,0 +1,31 @@
+name: Publish Helm Charts
+on:
+  push:
+    branches:
+      - main
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Set up Helm
+        uses: mamezou-tech/setup-helmfile@v1.0.0
+        with:
+          helm-version: "v3.10.1"
+
+      - name: Add S3 repo
+        run: "helm repo add glueops s3://${{ secrets.S3_BUCKET_NAME }}/charts"
+        env:
+          AWS_REGION: us-west-2
+
+      - name: Package and Publish
+        run: bash ./deploy.sh

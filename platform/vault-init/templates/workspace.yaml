@@ -1,0 +1,18 @@
+apiVersion: app.terraform.io/v1alpha1
+kind: Workspace
+metadata:
+  name: "vault-init"
+spec:
+  organization: "{{ .Values.TFC_ORG_NAME }}"
+  secretsMountPath: "/tmp/secrets"
+  module:
+    source: "git::https://github.com/GlueOps/terraform-vault-init.git"
+  variables:
+    - key: TOGGLE_TO_RERUN
+      sensitive: false
+      value: "{{ .Values.TOGGLE_TO_RERUN }}"
+      environmentVariable: true
+    - key: VAULT_ADDR
+      sensitive: false
+      value: "{{ .Values.VAULT_ADDR }}"
+      environmentVariable: false

@@ -1,0 +1,42 @@
+apiVersion: app.terraform.io/v1alpha1
+kind: Workspace
+metadata:
+  name: "snowflake-data-integrator-{{ (lower .Values.INTEGRATOR_NAME) }}"
+spec:
+  organization: "{{ .Values.TFC_ORG_NAME }}"
+  secretsMountPath: "/tmp/secrets"
+  module:
+    source: "git::https://github.com/GlueOps/terraform-snowflake-data-integrator.git"
+  variables:
+    - key: TOGGLE_TO_RERUN
+      sensitive: false
+      value: "{{ .Values.TOGGLE_TO_RERUN }}"
+      environmentVariable: true
+    - key: SNOWFLAKE_REGION
+      sensitive: false
+      value: "{{ .Values.SNOWFLAKE_REGION }}"
+      environmentVariable: true
+    - key: SNOWFLAKE_ACCOUNT
+      sensitive: false
+      value: "{{ .Values.SNOWFLAKE_ACCOUNT }}"
+      environmentVariable: true
+    - key: SNOWFLAKE_USER
+      sensitive: false
+      value: "{{ .Values.SNOWFLAKE_USER }}"
+      environmentVariable: true
+    - key: SNOWFLAKE_PASSWORD
+      sensitive: false
+      value: "{{ .Values.SNOWFLAKE_PASSWORD }}"
+      environmentVariable: true
+    - key: SNOWFLAKE_ROLE
+      sensitive: false
+      value: "{{ .Values.SNOWFLAKE_ROLE }}"
+      environmentVariable: true
+    - key: integrator_name
+      sensitive: false
+      value: "{{ .Values.INTEGRATOR_NAME }}"
+      environmentVariable: false
+    - key: integrator_password
+      sensitive: false
+      value: "{{ .Values.INTEGRATOR_PASSWORD }}"
+      environmentVariable: false

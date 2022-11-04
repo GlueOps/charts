@@ -1,0 +1,7 @@
+
+
+
+TOGGLE_TO_RERUN: 1
+TFC_ORG_NAME: "tfc-org-name-goes-here"
+GLUEOPS_ENV: "glueops-environment-name"
+CLOUD: "gcp"

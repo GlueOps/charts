@@ -1,0 +1,63 @@
+apiVersion: app.terraform.io/v1alpha1
+kind: Workspace
+metadata:
+  name: "snowflake-core"
+spec:
+  organization: "{{ .Values.TFC_ORG_NAME }}"
+  secretsMountPath: "/tmp/secrets"
+  module:
+    source: "git::https://github.com/GlueOps/terraform-snowflake-foundation.git"
+  variables:
+    - key: TOGGLE_TO_RERUN
+      sensitive: false
+      value: "{{ .Values.TOGGLE_TO_RERUN }}"
+      environmentVariable: true
+    - key: SNOWFLAKE_REGION
+      sensitive: false
+      value: "{{ .Values.SNOWFLAKE_REGION }}"
+      environmentVariable: true
+    - key: SNOWFLAKE_ACCOUNT
+      sensitive: false
+      value: "{{ .Values.SNOWFLAKE_ACCOUNT }}"
+      environmentVariable: true
+    - key: SNOWFLAKE_USER
+      sensitive: false
+      value: "{{ .Values.SNOWFLAKE_USER }}"
+      environmentVariable: true
+    - key: SNOWFLAKE_PASSWORD
+      sensitive: false
+      value: "{{ .Values.SNOWFLAKE_PASSWORD }}"
+      environmentVariable: true
+    - key: SNOWFLAKE_ROLE
+      sensitive: false
+      value: "{{ .Values.SNOWFLAKE_ROLE }}"
+      environmentVariable: true
+    - key: human_users
+      value: |
+        {
+        ADELINA_ANALYST = ["REPORTER"] 
+        BELICIA_DATA_ENGINEER = ["TRANSFORMER_DEVELOPMENT"] 
+        }
+      hcl: true
+      sensitive: false
+      environmentVariable: false
+    - key: service_users
+      value: |
+        {
+            DBT           = {
+              privilege_roles = [
+                "READ_ALL",
+                "WRITE_PRODUCTION"
+              ]
+              password = "{{ .Values.DBT_PASSWORD }}"
+            }
+            PRESET = {
+              privilege_roles = [
+                "READ_ALL",
+              ]
+              password = "{{ .Values.PRESET_PASSWORD }}"
+            }
+        }
+      hcl: true
+      sensitive: false
+      environmentVariable: false
