@@ -17,7 +17,7 @@ do
     for F in `ls -f *.tgz`
     do
         if [ "$GLUEOPS_ENV" == "development" ]; then
-        helm s3 push --acl="public-read" --relative $F $group --force --ignore-if-exists
+        helm s3 push --acl="public-read" --relative $F $group --force
         fi
 
         if [ "$GLUEOPS_ENV" == "production" ]; then
