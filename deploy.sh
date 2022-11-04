@@ -16,7 +16,15 @@ do
 
     for F in `ls -f *.tgz`
     do
+        if [ "$GLUEOPS_ENV" == "development" ]; then
+        helm s3 push --acl="public-read" --relative $F $group --force --ignore-if-exists
+        fi
+
+        if [ "$GLUEOPS_ENV" == "production" ]; then
         helm s3 push --acl="public-read" --relative $F $group --ignore-if-exists
+        fi
+
     done
     cd ..
 done
+

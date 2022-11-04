@@ -1,12 +1,10 @@
-name: Publish Helm Charts
-on:
-  push:
-    branches:
-      - main
+name: Publish Production Helm Charts
+on: workflow_dispatch
+
 jobs:
   publish:
     runs-on: ubuntu-latest
-    environment: development
+    environment: production
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -28,3 +26,4 @@ jobs:
         run: bash ./deploy.sh
         env:
           S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+          GLUEOPS_ENV: "production"
