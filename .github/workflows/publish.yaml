@@ -23,10 +23,6 @@ jobs:
         with:
           helm-version: "v3.10.1"
 
-      - name: Add S3 repo
-        run: "helm s3 init s3://${{ secrets.S3_BUCKET_NAME }}/charts && helm repo add glueops s3://${{ secrets.S3_BUCKET_NAME }}/charts"
-        env:
-          AWS_REGION: us-west-2
 
       - name: Package and Publish
         run: bash ./deploy.sh
