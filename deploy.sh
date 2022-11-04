@@ -16,7 +16,7 @@ do
 
     for F in `ls -f *.tgz`
     do
-        helm s3 push $F $group --ignore-if-exists
+        helm s3 push --acl="public-read" --relative $F $group --ignore-if-exists
     done
     cd ..
 done
